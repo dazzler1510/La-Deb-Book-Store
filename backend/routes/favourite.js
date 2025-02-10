@@ -29,7 +29,7 @@ router.put("/remove-book-from-favourite", authenticateToken,async(req,res)=>{
         const userData=await User.findById(id);
         const isBookFavourite= userData.favourites.includes(bookid);
         if (isBookFavourite){
-            await User.findByIdAndUpdate(id,{$push:{favourites:bookid }})
+            await User.findByIdAndUpdate(id,{$pull:{favourites:bookid }})
         
 
         } 
