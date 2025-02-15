@@ -7,7 +7,7 @@ import {MdOutlineDelete} from "react-icons/md";
 import axios from "axios";
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from "react-redux";
-
+import { Link } from "react-router-dom";
 
 const ViewBookDetails = () => {
     const {id}= useParams();
@@ -80,10 +80,11 @@ const ViewBookDetails = () => {
     )}
     {isLoggedIn === true && role=== "admin" && (
         <div className="flex flex-col  md:flex-row lg:flex-col items-cente justify-between lg:justify-start mt-4 lg:mt-0"> 
-        <button className="bg-white rounded  lg:rounded-full text-4xl lg:text-3xl p-3  flex items-cenrer justify-center">
+        <Link to ={`/updateBook/${id}`}  
+        className="bg-white rounded  lg:rounded-full text-4xl lg:text-3xl p-3  flex items-cenrer justify-center">
           <FaEdit/>  {" "}
           <span className="ms-4 block lg:hidden"> Edit</span>
-        </button>
+        </Link>
         <button className="text-red-500 rounded  lg:rounded-full text-4xl lg:text-3xl p-3 lg:mt-8 md:mt-0 mt-8 bg-white flex items-center justify-center "
          onClick={deleteBook}> 
           <MdOutlineDelete/> {" "}

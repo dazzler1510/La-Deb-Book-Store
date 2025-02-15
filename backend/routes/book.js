@@ -31,7 +31,7 @@ router.post("/add-book", authenticateToken, async(req,res)=>{
 });
 
 //update book
-router.post("/update-book",authenticateToken,async(req,res)=>{
+router.put("/update-book",authenticateToken,async(req,res)=>{
     try { 
     const {bookid}=req.headers;
     await Book.findByIdAndUpdate(bookid,{

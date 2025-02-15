@@ -16,6 +16,7 @@ import UserOrderHistory from './components/Profile/UserOrderHistory';
 import Settings from './components/Profile/Settings';
 import AllOrders from './pages/AllOrders';
 import AddBook from './pages/AddBook';
+import UpdateBook from './pages/UpdateBook';
 const App = () => {
   const dispatch= useDispatch()
   const role= useSelector((state)=> state.auth.role);
@@ -37,6 +38,7 @@ const App = () => {
         <Route exact path= "/" element ={   <Home/>}   />
         <Route  path= "/all-books" element ={   <AllBooks/>}   />
         <Route path= "/Login" element ={   <Login/>}   />
+        <Route path= "/updateBook/:id" element ={   <UpdateBook/>}   />
         <Route  path= "/SignUp" element ={   <SignUp/>}   />
         <Route  path= "/cart" element ={   <Cart/>}   />
         <Route  path= "/profile" element ={   <Profile/>} >

@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import React from 'react'
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const UpdateBook = () => {
     const [Data, setData] = useState({
@@ -11,11 +13,14 @@ const UpdateBook = () => {
         desc: "",
         language: "",
       });
+     
+      const {id}= useParams();
+      const navigate= useNavigate();
       const headers = {
         id: localStorage.getItem("id"),
         authorization: `Bearer ${localStorage.getItem("token")}`,
+        bookid: id,
       };
-    
       const change = (e) => {
         const { name, value } = e.target;
         setData({ ...Data, [name]: value });
@@ -32,8 +37,8 @@ const UpdateBook = () => {
           ) {
             alert("All fields are required");
           } else {
-            const response = await axios.post(
-              "http://localhost:1000/api/v1/add-book",
+            const response = await axios.put(
+              "http://localhost:1000/api/v1/update-book",
               Data,
               { headers }
             );
@@ -46,15 +51,25 @@ const UpdateBook = () => {
               language: "",
             });
             alert(response.data.message);
+            navigate(`/view-book-details/${id}`)
           }
         } catch (error) {
           alert(error.response.data.message);
+          
         }
       };
+      useEffect(() => {
+        const fetchBooks = async () => {
+          const response = await axios.get(`http://localhost:1000/api/v1/get-book-by-id/${id}`);
+          
+          setData(response.data.data);
+        };
+        fetchBooks();
+      }, []); 
   return (
-    <div className="h-[100%] p-0 md:p-4">
+    <div className="bg-zinc-900 h-[100%] p-0 md:p-4">
     <h1 className=" text-3xl md:text-5xl font-semibold text-zinc-500 mb-8">
-      Add Book
+      Update Book
     </h1>
     <div className="p-4 bg-zinc-800 rounded">
       <div>
@@ -148,7 +163,7 @@ const UpdateBook = () => {
         className=" mt-4 px-3 bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition-all duration-300"
         onClick={submit}
       >
-        Add Book
+        Update Book
       </button>
     </div>
   </div>
