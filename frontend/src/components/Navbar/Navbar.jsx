@@ -10,12 +10,22 @@ const Navbar = () => {
     { title: "All Books", link: "/all-books" },
     { title: "Cart", link: "/cart" },
     { title: "Profile", link: "/profile" },
+    { title: " Admin Profile", link: "/profile" },
   ];
-  const isLogggedIn=  useSelector((state)=>state.auth.isLoggedIn)
-  if (isLogggedIn== false)
+  const isLoggedIn=  useSelector((state)=>state.auth.isLoggedIn);
+  const role= useSelector ((state)=> state.auth.role);
+  if (isLoggedIn=== false)
   {
     links.splice(2, 2)
   }
+  if (isLoggedIn === true && role === "admin")
+  {
+     links.splice(3,1); 
+  }
+  if (isLoggedIn === true && role === "user")
+    {
+       links.splice(4,1); 
+    }
   const [MobileNav,setMobileNav] = useState("hidden");
   return (
 
@@ -35,7 +45,8 @@ const Navbar = () => {
       <div className=" hidden md:flex space-x-6">
         {links.map((items, i) => (
          <div className="flex items-center">
-         {items.title === "Profile" ? (
+         {items.title === "Profile" || 
+         items.title === "Admin Profile" ? (
            <Link
              to={items.link}
              key={i}
@@ -58,7 +69,7 @@ const Navbar = () => {
       </div>
 
       {/* Buttons */}
-      {isLogggedIn === false && <div className=" hidden md:flex space-x-4">
+      {isLoggedIn === false && <div className=" hidden md:flex space-x-4">
         <Link to="/Login" 
         className="px-4 py-2 border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white transition duration-300 rounded">
           Login
@@ -93,7 +104,7 @@ const Navbar = () => {
           </Link>
         ))}
          
-       {isLogggedIn === false ? ( <> <Link to="/Login" 
+       {isLoggedIn === false ? ( <> <Link to="/Login" 
         className={`${MobileNav} px-4 py-2 mb-8 text-2xl font-semibold border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white transition duration-300 rounded`}>
           Login
         </Link>

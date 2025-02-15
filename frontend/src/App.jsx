@@ -14,6 +14,8 @@ import {authActions} from "./store/auth"
 import Favourites from './components/Profile/Favourites';
 import UserOrderHistory from './components/Profile/UserOrderHistory';
 import Settings from './components/Profile/Settings';
+import AllOrders from './pages/AllOrders';
+import AddBook from './pages/AddBook';
 const App = () => {
   const dispatch= useDispatch()
   const role= useSelector((state)=> state.auth.role);
@@ -38,7 +40,13 @@ const App = () => {
         <Route  path= "/SignUp" element ={   <SignUp/>}   />
         <Route  path= "/cart" element ={   <Cart/>}   />
         <Route  path= "/profile" element ={   <Profile/>} >
-        <Route index element = {<Favourites/>}/>
+        {role === "user" ? (
+         <Route index element = {<Favourites/>}/> 
+        ):(
+         <Route index element = {<AllOrders/>}/>
+         )}
+        {role === "admin" &&  
+        <Route path="/profile/add-book" element = {<AddBook/>}/>}
         <Route path="/profile/orderHistory" element = {<UserOrderHistory/>}/>
         <Route path="/profile/settings" element = {<Settings/>}/>
         </Route>
